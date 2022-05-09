@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -12,26 +13,34 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var db *gorm.DB
+var gormDb *gorm.DB
 var _once sync.Once
 
 func initDb() {
 	var err error
 	var config = utils.GetConfig()
-	var dsn = utils.StringJoin(config.GetString("dataBase.username"), ":", config.GetString("dataBase.password"), "@tcp(", config.GetString("dataBase.url"), ")/", config.GetString("dataBase.dbName.0"), "?charset=utf8&parseTime=True&loc=Local")
+	var dsn = utils.StringJoin(config.GetString("dataSource.username"), ":", config.GetString("dataSource.password"), "@tcp(", config.GetString("dataSource.url"), ")/", config.GetString("dataSource.database.0"), "?charset=utf8&parseTime=True&loc=Local")
 	loggers := logger.New(log.New(os.Stdout, "\r\n", log.LstdFlags), logger.Config{})
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: loggers})
+	gormDb, err = gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: loggers})
 	if err != nil {
 		panic(fmt.Sprintf("connect DataBase error: %s", err.Error()))
 	}
-	sqlDb, _ := db.DB()
-	sqlDb.SetMaxOpenConns(40)
-	sqlDb.SetMaxIdleConns(20)
+	sqlDb, _ := gormDb.DB()
+	sqlDb.SetMaxOpenConns(config.GetInt("maxOpenConns"))
+	sqlDb.SetMaxIdleConns(config.GetInt("maxIdleConns"))
 }
 
-func GetDbInstance() *gorm.DB {
+func GetGormDbInstance() *gorm.DB {
 	_once.Do(func() {
 		initDb()
 	})
-	return db
+	return gormDb
+}
+
+func GetSqlDbInstance() *sql.DB {
+	sqldb, err := GetGormDbInstance().DB()
+	if err != nil {
+		panic(fmt.Sprintf("Get sqldb error: %s", err.Error()))
+	}
+	return sqldb
 }
