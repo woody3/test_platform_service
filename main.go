@@ -2,7 +2,7 @@ package main
 
 import (
 	"runtime"
-	"test_paltform_service/repository"
+	"test_paltform_service/routers"
 	"test_paltform_service/utils"
 )
 
@@ -12,5 +12,6 @@ func main() {
 	} else {
 		utils.Viper("application-dev.yaml")
 	}
-	repository.InitDb()
+
+	routers.RunGinEngin()
 }

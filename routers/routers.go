@@ -7,22 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var eng *gin.Engine
-var lock sync.Mutex
+var app *gin.Engine
+var _once sync.Once
 
-func singleEng() {
-	lock.Lock()
-	defer lock.Unlock()
-	eng = gin.Default()
+func init() {
+	_once.Do(func() {
+		app = gin.Default()
+	})
 }
 
 func addAuthRouters() {
-	singleEng()
-	authGroup := eng.Group("auth")
+	authGroup := app.Group("auth")
 	{
 		authGroup.POST("/login", controller.Login)
 		authGroup.POST("/logout", controller.Logout)
-		authGroup.POST("/test", controller.Test)
+		authGroup.GET("/test", controller.Test)
 	}
 
 }
