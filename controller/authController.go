@@ -2,20 +2,22 @@ package controller
 
 import (
 	"net/http"
-	"test_paltform_service/service"
+	"test_platform_service/service"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
-func Login(c *gin.Context) {
-	var msg string = service.UserLoginService()
-	c.JSON(http.StatusOK, gin.H{"msg": msg})
+func Login(ctx *gin.Context) {
+	service.UserLoginService(ctx)
+	ctx.JSON(http.StatusOK, gin.H{"msg": "login success"})
 }
 
-func Logout(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"msg": "Hello,word"})
+func Logout(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{"msg": "Hello,word"})
 }
 
-func Test(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"msg": "hahaha"})
+func Test(ctx *gin.Context) {
+	zap.L().Debug("this is Test func")
+	ctx.JSON(http.StatusOK, gin.H{"msg": "hahaha"})
 }

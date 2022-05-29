@@ -27,7 +27,7 @@ func Viper(filename string) {
 			}
 			config.WatchConfig()
 			viper.OnConfigChange(func(e fsnotify.Event) {
-				fmt.Println("config file changed:", e.Name)
+				fmt.Println("碉堡了~配置文件被其他捞B修改了...")
 			})
 		}
 	}

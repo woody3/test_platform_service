@@ -1,1 +1,6 @@
 [logs]
+2022-05-29T16:01:41.589+0800	DEBUG	controller/authController.go:21	this is Test func
+2022-05-29T16:01:41.607+0800	INFO	middleware/zapLogger.go:87	/auth/test	{"STATUS": 200, "METHOD": "GET", "PATH": "/auth/test", "query": "", "errors": "", "COST": 0.0182563}
+2022-05-29T16:01:41.647+0800	INFO	middleware/zapLogger.go:87	/favicon.ico	{"STATUS": 404, "METHOD": "GET", "PATH": "/favicon.ico", "query": "", "errors": "", "COST": 0}
+2022-05-29T16:20:54.717+0800	DEBUG	controller/authController.go:21	this is Test func
+2022-05-29T16:20:54.735+0800	INFO	middleware/zapLogger.go:87	/auth/test	{"STATUS": 200, "METHOD": "GET", "PATH": "/auth/test", "query": "", "errors": "", "COST": 0.0185575}

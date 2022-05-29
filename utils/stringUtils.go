@@ -1,6 +1,10 @@
 package utils
 
-import "strings"
+import (
+	"crypto/md5"
+	"encoding/hex"
+	"strings"
+)
 
 func StringJoin(args ...string) string {
 	var builder strings.Builder
@@ -8,4 +12,11 @@ func StringJoin(args ...string) string {
 		builder.WriteString(s)
 	}
 	return builder.String()
+}
+
+func EncryptMD5(v string) string {
+	d := []byte(v)
+	m := md5.New()
+	m.Write(d)
+	return hex.EncodeToString(m.Sum(nil))
 }

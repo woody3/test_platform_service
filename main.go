@@ -2,8 +2,8 @@ package main
 
 import (
 	"runtime"
-	"test_paltform_service/routers"
-	"test_paltform_service/utils"
+	"test_platform_service/routers"
+	"test_platform_service/utils"
 )
 
 func main() {

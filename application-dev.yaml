@@ -1,5 +1,7 @@
 server:
   port: 8090
+mode: debug
+authSecret: woodywoodpecker
 
 dataSource:
   dbType: mysql
@@ -19,4 +21,9 @@ dataSource:
 kafka:
   topic: ccg
 
-logDir: ./logs/log.log
+logger:
+  filename: ./logs/log.log
+  level: DEBUG
+  maxSize: 64
+  maxBackups: 10
+  maxAge: 7
