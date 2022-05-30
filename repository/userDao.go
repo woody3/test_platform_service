@@ -8,7 +8,7 @@ import (
 func UserLoginDAO(user *model.User) (flag bool) {
 	var count int64
 	db := GetGormDbInstance()
-	db.Where("username = ? and password= ?", user.UserName, utils.EncryptMD5(user.Password)).Count(&count)
+	db.Where("username = ? and password= ?", user.UserName, utils.EncryptMD5(user.Password)).Find(user).Count(&count)
 	if count == 1 {
 		flag = true
 	}

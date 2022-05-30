@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"test_platform_service/model"
 	"test_platform_service/service"
 
 	"github.com/gin-gonic/gin"
@@ -9,8 +10,17 @@ import (
 )
 
 func Login(ctx *gin.Context) {
-	service.UserLoginService(ctx)
-	ctx.JSON(http.StatusOK, gin.H{"msg": "login success"})
+	var user model.User
+	err := ctx.ShouldBind(&user)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": "2001",
+			"msg":  "params invalid",
+		})
+		return
+	}
+	response := service.UserLoginService(&user)
+	ctx.JSON(http.StatusOK, response)
 }
 
 func Logout(ctx *gin.Context) {
