@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"sync"
 	"test_platform_service/middleware"
+	"test_platform_service/repository"
 	"test_platform_service/utils"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,10 @@ var app *gin.Engine
 var _once sync.Once
 
 // 所有路由注册完成后，启动gin引擎
-func RunGinEngin() {
+func EngineBoot(DBInit bool) {
+	if DBInit {
+		repository.InitDb()
+	}
 	genGinInstance()
 	registerRouters()
 	app.StaticFile("favicon.ico", "./favicon.ico")

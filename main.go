@@ -13,5 +13,5 @@ func main() {
 		utils.Viper("application-dev.yaml")
 	}
 
-	routers.RunGinEngin()
+	routers.EngineBoot(false)
 }
