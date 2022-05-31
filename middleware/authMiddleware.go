@@ -13,7 +13,7 @@ func AuthMiddleware() func(ctx *gin.Context) {
 		authHeader := ctx.Request.Header.Get("Authorization")
 		if authHeader == "" {
 			ctx.JSON(http.StatusOK, gin.H{
-				"code": 2003,
+				"code": "1002",
 				"msg":  "请求头中auth为空",
 			})
 			ctx.Abort()
@@ -23,7 +23,7 @@ func AuthMiddleware() func(ctx *gin.Context) {
 		parts := strings.SplitN(authHeader, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
 			ctx.JSON(http.StatusOK, gin.H{
-				"code": "1002",
+				"code": "1003",
 				"msg":  "请求头中auth格式有误",
 			})
 			ctx.Abort()
@@ -33,8 +33,8 @@ func AuthMiddleware() func(ctx *gin.Context) {
 		mc, err := utils.ParseToken(parts[1])
 		if err != nil {
 			ctx.JSON(http.StatusOK, gin.H{
-				"code": 2005,
-				"msg":  "无效的Token",
+				"code": "1004",
+				"msg":  "invalid Token",
 			})
 			ctx.Abort()
 			return
