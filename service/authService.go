@@ -8,20 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserLoginService(user *model.User) (response *gin.H) {
+func UserLoginService(user *model.User) *gin.H {
 	if repository.UserLoginDAO(user) {
 		token, _ := utils.GenToken(user.UserName)
-		response = &gin.H{
+		return &gin.H{
 			"code": "0000",
 			"msg":  "success",
 			"data": gin.H{"token": token},
 		}
-		return
 	}
-	response = &gin.H{
+	return &gin.H{
 		"code": "1001",
-		"msg":  "login failed",
+		"msg":  "user not exists",
 		"data": "",
 	}
-	return
 }
