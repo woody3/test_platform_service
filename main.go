@@ -4,6 +4,7 @@ import (
 	"runtime"
 	"test_platform_service/routers"
 	"test_platform_service/utils"
+	"test_platform_service/repository"
 )
 
 func main() {
@@ -12,6 +13,7 @@ func main() {
 	} else {
 		utils.Viper("application-dev.yaml")
 	}
-
-	routers.EngineBoot(false)
+//         初始化数据库
+//         repository.InitDb()
+	routers.EngineBoot()
 }
