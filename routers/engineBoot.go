@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"sync"
 	"test_platform_service/middleware"
-	"test_platform_service/repository"
 	"test_platform_service/utils"
 
 	"github.com/gin-gonic/gin"
