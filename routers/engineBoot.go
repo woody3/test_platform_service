@@ -15,10 +15,7 @@ var app *gin.Engine
 var _once sync.Once
 
 // 所有路由注册完成后，启动gin引擎
-func EngineBoot(DBInit bool) {
-	if DBInit {
-		repository.InitDb()
-	}
+func EngineBoot() {
 	genGinInstance()
 	registerRouters()
 	app.StaticFile("favicon.ico", "./favicon.ico")
